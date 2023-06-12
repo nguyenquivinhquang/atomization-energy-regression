@@ -59,7 +59,7 @@ class Trainer(object):
             val_loss, mae = self.validate(epoch)
             self.scheduler.step()
             current_lr = self.optimizer.param_groups[0]['lr']
-            if epoch % 20 == 0:
+            if epoch % 50 == 0:
                 print(
                     "Epoch: {} \tTraining Loss: {:.6f} \tValidation Loss: {:.6f} \t LR: {:.8f}".format(
                         epoch, train_loss, val_loss, current_lr
@@ -69,5 +69,5 @@ class Trainer(object):
             if mae < best_loss:
                 best_loss = mae
                 # torch.save(self.model.state_dict(), 'model.pt')
-                print("Best loss at epoch {} is {:.6f}".format(epoch, best_loss))
+                if epoch > 100: print("Best loss at epoch {} is {:.6f}".format(epoch, best_loss))
         return mae

@@ -50,7 +50,7 @@ def make_scheduler(cfg, optimizer):
             gamma=0.5,
         )
     elif cfg["WARMUP_METHOD"] == "StepLR":
-        scheduler = StepLR(optimizer, step_size=cfg["STEPS"], gamma=0.1)
+        scheduler = StepLR(optimizer, step_size=cfg["STEPS"], gamma=0.5)
     else:
         scheduler = WarmupMultiStepLR(
             optimizer,
