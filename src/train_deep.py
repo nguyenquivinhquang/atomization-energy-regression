@@ -7,6 +7,7 @@ from sklearn.metrics import mean_absolute_error
 from src.solver import make_optimizer, make_scheduler
 import torch.nn as nn
 import numpy as np
+import torch
 def train(cfg):
     print(cfg)
     train_loader, val_loader, scale, feature_size = make_data_loader(cfg)
@@ -24,7 +25,7 @@ def train(cfg):
         best_loss = trainer.process() * scale
         print("Best Loss: ", best_loss)
         losses.append(best_loss)
-    print("Average Loss: ", np.mean(losses))
+    print("Average Loss: ", torch.mean(losses))
     return
 if __name__ == "__main__":
     cfg = Opts(Config("configs/default.yaml")).parse_args()
