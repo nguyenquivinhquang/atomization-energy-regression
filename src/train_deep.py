@@ -25,6 +25,7 @@ def train(cfg):
         best_loss = trainer.process() * scale
         print("Best Loss: ", best_loss)
         losses.append(best_loss)
+    losses = torch.tensor(losses)
     print("Average Loss: ", torch.mean(losses))
     return
 if __name__ == "__main__":
