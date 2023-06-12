@@ -2,7 +2,7 @@ import scipy.io
 import numpy as np
 from ase import Atoms
 from src.data_processing.molecule import get_molecule_name 
-from src.data_processing.dataset.qm7 import QM7Data, QM7DataML
+from src.data_processing.dataset.qm7 import  QM7DataML
 
 def make_data_loader(cfg):
     if cfg['DATASET']['DATASET_NAME'] == 'qm7':

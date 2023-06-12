@@ -35,7 +35,8 @@ class QM7DataML(QM7Data):
         super().__init__(datapath)
         self.cfg = cfg
         self.data_train, self.data_test = self.train_test_split()
-        
+    def process(self):
+        return self.train_test_split()
     def train_test_split(self):
         data_train, data_test = {}, {}
         X, Y, self.scale_factor = self.feature_engineering()
