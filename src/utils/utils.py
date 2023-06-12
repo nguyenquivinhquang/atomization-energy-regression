@@ -11,7 +11,6 @@ import platform
 from .opt import Opts, Config
 
 
-
 def deep_update(mapping: dict, *updating_mappings: dict()) -> dict():
     updated_mapping = mapping.copy()
     for updating_mapping in updating_mappings:
@@ -121,8 +120,8 @@ def load_defaults(defaults_file: list = []):
     for file in defaults_file:
         print(file)
         cfg = deep_update(cfg, Config(file))
-    
+
     cfg = Opts(cfg).parse_args()
-   
+
     cfg = load_enviroment_path(cfg)
     return cfg

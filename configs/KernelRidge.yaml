@@ -2,4 +2,4 @@ MODEL:
   MODEL_NAME: 'KernelRidge'
   KERNEL: 'rbf'
   ALPHA: 0.0001
-  GAMMA: 0001
+  GAMMA: 0.0001
