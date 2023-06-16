@@ -1,9 +1,10 @@
-python-dotenv==0.20.0
+python-dotenv
 pyyaml
-tqdm==4.64.1
+tqdm
 opencv-python==4.6.0.66
 # scipy==1.2.0
-Pillow==8.4.0
+Pillow
+pytorch-lightning
 nbformat
 nbconvert
 jupyter-contrib-nbextensions

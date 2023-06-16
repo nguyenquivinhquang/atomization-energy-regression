@@ -114,3 +114,13 @@ class QM7DataML(QM7Data):
             sorted_coulomb_mat.sort(axis=1)
             return sorted_coulomb_mat
         return x
+
+class QM7DataGraph(QM7DataML):
+    def __init__(self, datapath, cfg):
+        super().__init__(datapath, cfg)
+
+    def  feature_engineering(self):
+        X = self.X
+        Y, self.scale_factor = self._scaling(self.T)
+        Z, R = self.Z, self.R
+        features_vector = []
