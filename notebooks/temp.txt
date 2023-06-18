@@ -1,0 +1,72 @@
+Best loss at epoch 102 is 0.004382
+Best loss at epoch 104 is 0.004374
+Best loss at epoch 113 is 0.003966
+Epoch: 150 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00050000
+Best loss at epoch 150 is 0.003728
+Best loss at epoch 154 is 0.003620
+Best loss at epoch 155 is 0.003593
+Best loss at epoch 166 is 0.003578
+Best loss at epoch 185 is 0.003549
+Best loss at epoch 191 is 0.003530
+Epoch: 200 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00050000
+Best loss at epoch 213 is 0.003522
+Best loss at epoch 216 is 0.003464
+Best loss at epoch 236 is 0.003214
+Epoch: 250 	Training Loss: 0.000000 	Validation Loss: 0.000001 	 LR: 0.00050000
+Epoch: 300 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00025000
+Best loss at epoch 300 is 0.003005
+Best loss at epoch 308 is 0.002927
+Best loss at epoch 317 is 0.002902
+Best loss at epoch 320 is 0.002853
+Best loss at epoch 339 is 0.002838
+Epoch: 350 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00025000
+Best loss at epoch 354 is 0.002748
+Best loss at epoch 372 is 0.002723
+Best loss at epoch 393 is 0.002682
+Epoch: 400 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00025000
+Best loss at epoch 406 is 0.002661
+Best loss at epoch 431 is 0.002580
+Epoch: 450 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00012500
+Best loss at epoch 450 is 0.002514
+Best loss at epoch 464 is 0.002506
+Best loss at epoch 465 is 0.002479
+Best loss at epoch 469 is 0.002467
+Best loss at epoch 488 is 0.002445
+Epoch: 500 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00012500
+Best loss at epoch 512 is 0.002441
+Best loss at epoch 528 is 0.002398
+Epoch: 550 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00012500
+Best loss at epoch 573 is 0.002370
+Best loss at epoch 580 is 0.002339
+Epoch: 600 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00006250
+Best loss at epoch 601 is 0.002333
+Best loss at epoch 604 is 0.002324
+Best loss at epoch 637 is 0.002321
+Best loss at epoch 644 is 0.002320
+Epoch: 650 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00006250
+Best loss at epoch 663 is 0.002318
+Best loss at epoch 666 is 0.002311
+Epoch: 700 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00006250
+Best loss at epoch 708 is 0.002308
+Best loss at epoch 749 is 0.002304
+Epoch: 750 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00003125
+Best loss at epoch 754 is 0.002301
+Best loss at epoch 758 is 0.002293
+Best loss at epoch 782 is 0.002292
+Epoch: 800 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00003125
+Best loss at epoch 831 is 0.002282
+Epoch: 850 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00003125
+Epoch: 900 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00001563
+Best loss at epoch 914 is 0.002278
+Epoch: 950 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00001563
+Epoch: 1000 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00001563
+Epoch: 1050 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00000781
+Epoch: 1100 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00000781
+Epoch: 1150 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00000781
+Epoch: 1200 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00000391
+Epoch: 1250 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00000391
+Epoch: 1300 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00000391
+Epoch: 1350 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00000195
+Epoch: 1400 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00000195
+Epoch: 1450 	Training Loss: 0.000000 	Validation Loss: 0.000000 	 LR: 0.00000195
+Best Loss:  tensor(5.0533, device='cuda:0')

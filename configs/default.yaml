@@ -3,6 +3,7 @@ DATASET:
   PATH: 'dataset/qm7.mat'
   SORT_TYPE: 'NORM'
   FEATURES_TYPE: ['eigen_value','centralities', 'coordinate']
+  # FEATURES_TYPE: ['eigen_value', 'centralities']
   SCALING: 'MinMax'
   GRAPH_FEATURE: False
 SEED: 1706
