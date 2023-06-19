@@ -7,5 +7,6 @@ def build_regression_model(cfg, input_size = 0):
     elif "GNN" not in cfg["MODEL"]["MODEL_NAME"]:
         model = build_ml_model(cfg["MODEL"])
     else:
-        pass
+        # build GNN model
+        cfg_model = cfg["MODEL"]
     return model

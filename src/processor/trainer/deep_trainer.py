@@ -24,6 +24,7 @@ class Trainer(object):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.total_epochs = total_epochs
         self.model.to(self.device)
+
     def train(self, epoch):
         self.model.train()
         train_loss = 0
@@ -71,3 +72,33 @@ class Trainer(object):
                 # torch.save(self.model.state_dict(), 'model.pt')
                 if epoch > 100: print("Best loss at epoch {} is {:.6f}".format(epoch, best_loss))
         return mae
+    
+class GraphTrainer(Trainer):
+    def train(self, epoch):
+        self.model.train()
+        train_loss = 0
+        for batch_idx, (data) in enumerate(self.train_loader):
+            data = data.to(self.device)
+            out = self.model(data.x.float(), data.edge_index, data.batch, data.edge_attrs)
+            self.optimizer.zero_grad()
+            output = self.model(data)
+            loss = self.loss_fn(output, data.y)
+            loss.backward()
+            self.optimizer.step()
+            train_loss += loss.item()
+        train_loss /= len(self.train_loader.dataset)
+        return train_loss
+    def validate(self, epoch):
+        self.model.eval()
+        val_loss = 0
+        with torch.no_grad():
+            error = []
+            for data in self.val_loader:
+                data = data.to(self.device)
+                # output = self.model(data)
+                output = self.model(data.x.float(), data.edge_index, data.batch)
+                val_loss += self.loss_fn(output, data.y).item()
+                MAE = nn.L1Loss()
+                error.append(MAE(output, data.y))
+        val_loss /= len(self.val_loader.dataset)
+        return val_loss, torch.mean(torch.stack(error))        

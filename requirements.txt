@@ -17,3 +17,4 @@ scikit-learn
 shapely
 ase
 networkx==2.6.3
+torch_geometric
