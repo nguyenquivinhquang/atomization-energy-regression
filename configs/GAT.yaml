@@ -1,0 +1,5 @@
+MODEL:
+  MODEL_NAME: "GAT"
+  DIM_H: 
+  HEADS: 8
+  EDGE_DIM: 1

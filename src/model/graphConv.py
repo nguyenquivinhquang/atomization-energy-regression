@@ -15,7 +15,7 @@ class GCN(torch.nn.Module):
         self.relu = torch.nn.ReLU()
         self.fc1 = Linear(hidden_channels//2, 1)
 
-    def forward(self, x, edge_index, batch):
+    def forward(self, x, edge_index, batch, edge_weight=None):
         x = self.conv1(x, edge_index)
         x = self.relu(x)
         x = self.conv2(x, edge_index)
