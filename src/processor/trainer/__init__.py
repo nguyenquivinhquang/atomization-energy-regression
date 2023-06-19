@@ -1,4 +1,4 @@
-from .deep_trainer import Trainer, DeepTrainer
+from .deep_trainer import Trainer, GraphTrainer
 
 def build_trainer(cfg, model, train_loader, val_loader, optimizer, scheduler, loss_fn, total_epochs):
     if cfg['MODEL']['MODEL_NAME'] == 'MLP':
