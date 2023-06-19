@@ -16,7 +16,10 @@ def train(cfg):
     losses = []
     for idx in range(len(train_loader)):
         model = build_regression_model(cfg, feature_size)
-        loss_fn = nn.MSELoss()
+        if cfg['SOLVER']['LOSS'] == 'MAE':
+            loss_fn = nn.L1Loss()
+        elif cfg['SOLVER']['LOSS'] == 'MSE':
+            loss_fn = nn.MSELoss()
         optimizer = make_optimizer(cfg['SOLVER'], model)
         scheduler = make_scheduler(cfg['SOLVER'], optimizer)
         trainer = Trainer(
