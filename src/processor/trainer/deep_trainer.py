@@ -72,9 +72,9 @@ class Trainer(object):
             if mae < best_loss:
                 best_loss = mae
                 # torch.save(self.model.state_dict(), 'model.pt')
-                if epoch > 100:
+                if epoch > 10:
                     print("Best loss at epoch {} is {:.6f}".format(epoch, best_loss))
-        return mae
+        return best_loss
 
 
 class GraphTrainer(Trainer):
