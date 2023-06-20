@@ -124,3 +124,19 @@ class QM7DataGraph(QM7DataML):
         Y, self.scale_factor = self._scaling(self.T)
         Z, R = self.Z, self.R
         features_vector = []
+        coulomb_matrix = torch.from_numpy(self.X)
+        node_features = []
+        for i in range(coulomb_matrix.shape[0]):
+            atom_charge = Z[i]
+            coordinate = R[i]
+            x = data['X'][i]
+            # print(nx.degree_centrality(nx.from_numpy_matrix(x)).values())
+            centrality = list(nx.degree_centrality(nx.from_numpy_matrix(x)).values())
+
+            feature = []
+            for node_idx in range(coulomb_matrix.shape[1]):
+                if abs(atom_charge[node_idx] - 0.0) < 1e-5:
+                    continue
+                feature.append(np.array([coordinate[node_idx, :][0], coordinate[node_idx, :][1], coordinate[node_idx, :][2] , centrality[node_idx]]))
+            node_features.append(feature)
+        return np.asarray(features_vector), Y, self.scale_factor
