@@ -131,9 +131,7 @@ class QM7DataGraph(QM7DataML):
             atom_charge = Z[i]
             coordinate = R[i]
             x = data['X'][i]
-            # print(nx.degree_centrality(nx.from_numpy_matrix(x)).values())
             centrality = list(nx.degree_centrality(nx.from_numpy_matrix(x)).values())
-
             feature = []
             for node_idx in range(coulomb_matrix.shape[1]):
                 if abs(atom_charge[node_idx] - 0.0) < 1e-5:
