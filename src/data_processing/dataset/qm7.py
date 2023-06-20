@@ -2,6 +2,8 @@ import scipy.io
 import numpy as np
 import networkx as nx
 from ase import Atoms
+import torch
+from torch_geometric.data import Data
 
 
 def get_molecule_name(data):
@@ -10,11 +12,6 @@ def get_molecule_name(data):
     molecule_name = []
     for i in range(len(Z)):
         molecule_name.append(str(Atoms(numbers=Z[i], positions=R[i]).symbols))
-        # if 'X' not in molecule_name[-1]:
-        #     print(molecule_name[i])
-        #     print(Z[i])
-        #     print(R[i])
-        #     exit(0)
     return np.asarray(molecule_name)
 
 
@@ -48,13 +45,13 @@ class QM7DataML(QM7Data):
             mask = np.zeros(Y.size, dtype=bool)
             mask[split] = True
             data_train[idx] = {
-                "X": X[~mask],
-                "Y": Y[~mask],
+                "X": torch.from_numpy(X[~mask]).float(),
+                "Y": torch.from_numpy(Y[~mask]).float().view(-1, 1),
                 "molecule_name": self.molecule_name[~mask],
             }
             data_test[idx] = {
-                "X": X[mask],
-                "Y": Y[mask],
+                "X": torch.from_numpy(X[mask]).float(),
+                "Y": torch.from_numpy(Y[mask]).float().view(-1, 1),
                 "molecule_name": self.molecule_name[mask],
             }
 
@@ -115,27 +112,94 @@ class QM7DataML(QM7Data):
             return sorted_coulomb_mat
         return x
 
+
 class QM7DataGraph(QM7DataML):
     def __init__(self, datapath, cfg):
         super().__init__(datapath, cfg)
 
-
-    def  feature_engineering(self):
+    def feature_engineering(self):
         X = self.X
         Y, self.scale_factor = self._scaling(self.T)
         Z, R = self.Z, self.R
-        features_vector = []
+
         coulomb_matrix = torch.from_numpy(self.X)
         node_features = []
         for i in range(coulomb_matrix.shape[0]):
             atom_charge = Z[i]
             coordinate = R[i]
-            x = data['X'][i]
+            x = X[i]
             centrality = list(nx.degree_centrality(nx.from_numpy_matrix(x)).values())
             feature = []
             for node_idx in range(coulomb_matrix.shape[1]):
                 if abs(atom_charge[node_idx] - 0.0) < 1e-5:
                     continue
-                feature.append(np.array([coordinate[node_idx, :][0], coordinate[node_idx, :][1], coordinate[node_idx, :][2] , centrality[node_idx]]))
+                feature.append(
+                    np.array(
+                        [
+                            coordinate[node_idx, :][0],
+                            coordinate[node_idx, :][1],
+                            coordinate[node_idx, :][2],
+                            centrality[node_idx],
+                        ]
+                    )
+                )
             node_features.append(feature)
-        return np.asarray(features_vector), Y, self.scale_factor
+        return node_features, Y, self.scale_factor
+
+    def train_test_split(self):
+        data_train, data_test = {}, {}
+        node_features, Y, self.scale_factor = self.feature_engineering()
+        X = self.X
+        for idx, split in enumerate(self.P):
+            data_train[idx], data_test[idx] = self._pre_process_per_fold(
+                node_features, X, Y, split
+            )
+        return data_train, data_test
+
+    def _pre_process_per_fold(self, node_features, X, Y, split):
+        mask = np.zeros(Y.size, dtype=bool)
+        mask[split] = True
+        X_train = X[~mask]
+        y_train = Y[~mask]
+        X_test = X[mask]
+        y_test = Y[mask]
+        X_train = torch.from_numpy(X_train).float()
+        y_train = torch.from_numpy(y_train).float()
+        X_test = torch.from_numpy(X_test).float()
+        y_test = torch.from_numpy(y_test).float()
+     
+        split.sort()
+        node_train, node_test = [], []
+        for idx in split:
+            node_test.append(np.asarray(node_features[idx]))
+        for idx in range(len(node_features)):
+            if idx not in split:
+                node_train.append(np.asarray(node_features[idx]))
+        train_list, val_list = [], []
+        for i in range(y_train.shape[0]):
+            edge_index = X_train[i].nonzero(as_tuple=False).t().contiguous()
+            edge_attr = X_train[i, edge_index[0], edge_index[1]]
+            y = y_train[i].view(-1, 1)
+            # y = torch.tensor(y)
+            node_feature = node_train[i]
+            node_feature = torch.tensor(node_feature)
+            # edge_index = torch.tensor(edge_index)
+            # edge_attr = torch.tensor(edge_attr)
+
+            data = Data(x=node_feature, edge_index=edge_index, edge_attr=edge_attr, y=y)
+            data.num_nodes = edge_index.max().item() + 1
+            train_list.append(data)
+        for i in range(y_test.shape[0]):
+            edge_index = X_test[i].nonzero(as_tuple=False).t().contiguous()
+            edge_attr = X_test[i, edge_index[0], edge_index[1]]
+            y = y_test[i].view(-1, 1)
+            # y = torch.tensor(y)
+            node_feature = node_test[i]
+            node_feature = torch.tensor(node_feature)
+            # edge_index = torch.tensor(edge_index)
+            # edge_attr = torch.tensor(edge_attr)
+
+            data = Data(x=node_feature, edge_index=edge_index, edge_attr=edge_attr, y=y)
+            data.num_nodes = edge_index.max().item() + 1
+            val_list.append(data)
+        return train_list, val_list

@@ -6,6 +6,7 @@ from processor.trainer.ml_trainer import MLTrain
 from sklearn.metrics import mean_absolute_error
 import time
 
+
 # from src.
 def train(cfg):
     print(cfg)
