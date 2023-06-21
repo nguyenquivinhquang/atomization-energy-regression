@@ -15,7 +15,7 @@ def build_ml_model(cfg):
     elif cfg["MODEL_NAME"] == "LinearRegression":
         model = LinearRegression()
     elif cfg["MODEL_NAME"] == "DecisionTreeRegressor":
-        model = DecisionTreeRegressor(criterion="mae")
+        model = DecisionTreeRegressor(criterion="absolute_error")
     # else:
 
     return model

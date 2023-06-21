@@ -66,6 +66,7 @@ def make_data_loader(cfg):
                 val_loader[fold] = GraphDataLoader(
                     val,
                     batch_size=cfg["SOLVER"]["BATCH_SIZE"],
+                    # batch_size=1,
                     shuffle=False,
                 )
             feature_size = train_loader[0].dataset[0].num_features
