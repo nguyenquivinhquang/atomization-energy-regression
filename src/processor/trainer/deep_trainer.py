@@ -49,7 +49,7 @@ class Trainer(object):
                 data, target = data.to(self.device), target.to(self.device)
                 output = self.model(data)
                 val_loss += self.loss_fn(output, target).item()
-                MAE = nn.L1Loss()
+                MAE = nn.L1Loss(reduction='sum')
                 error += MAE(output, target)
         val_loss /= len(self.val_loader.dataset)
         error /= len(self.val_loader.dataset)
@@ -103,11 +103,7 @@ class GraphTrainer(Trainer):
                 data = data.to(self.device)
                 # output = self.model(data)
                 output = self.model(data.x.float(), data.edge_index, data.batch, data.edge_attr)
-                # print(output)
-                # print(output.shape)
-                # exit(0)
-                # output = output.view(-1)
-                # gt = data.y.view(-1)
+   
                 _val_loss = self.loss_fn(output, data.y).item()
                 # _val_loss = self.loss_fn(output, gt).item()
                 
